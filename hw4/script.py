@@ -2,6 +2,7 @@
 import os
 import argparse
 from typing import List
+from time import sleep
 
 parser = argparse.ArgumentParser()
 parser.add_argument('forks', type=int, help='number of forks')
@@ -22,6 +23,7 @@ for i in range(1, args.forks + 1):
             if(os.getppid() == init):
                 exit(1)
             print(f'fork = {i}\titeration = {j}\tmessage = {args.message}')
+            sleep(1)
         exit(0)
         
 for pid in child_pids:
