@@ -1,7 +1,6 @@
 import os
-from typing import List
-
 import argparse
+from typing import List
 
 parser = argparse.ArgumentParser()
 parser.add_argument('forks', type=int, help='number of forks')
@@ -11,18 +10,18 @@ parser.add_argument('message', type=str, help='message')
 args = parser.parse_args()
 
 child_pids: List[int] = []
+init = os.getppid()
 
 for i in range(1, args.forks + 1):
     pid = os.fork()
-    if (pid == 0):
+    if (pid != 0):
         child_pids.append(pid)
     else:
         for j in range(args.iterations * i):
+            if(os.getppid() == init):
+                exit(1)
             print(f'fork = {i}\titeration = {j}\tmessage = {args.message}')
         exit(0)
         
 for pid in child_pids:
-    try:
-        os.waitpid(pid, 0)
-    except ChildProcessError:
-        continue
+    os.waitpid(pid, 0)
