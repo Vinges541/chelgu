@@ -45,4 +45,6 @@
 
 4. написание микросервиса в docker-compose с сетями bridge и macvlan
 
+    [docker-compose.yml](docker-compose.yml)
 
+    ![](4.png)

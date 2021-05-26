@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  my-hello-world:
+    build: .
+    links:
+      - redis_bridge
+      - redis_macvlan
+    networks:
+      - bridge_nw
+      - macvlan_nw
+  redis_bridge:
+    image: "redis:alpine"
+    command: redis-server --requirepass passwd
+    networks:
+      - bridge_nw
+
+  redis_macvlan:
+     image: "redis:alpine"
+     command: redis-server --requirepass passwd
+     networks:
+       - macvlan_nw
+
+networks:
+  bridge_nw:
+    driver: bridge
+
+  macvlan_nw:
+    driver: macvlan
