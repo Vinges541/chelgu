@@ -1,0 +1,14 @@
+version: "3"
+services:
+  first:
+    build: .
+    networks:
+      - ssh_network
+  second:
+    build: .
+    networks:
+      - ssh_network
+
+networks:
+  ssh_network:
+    driver: bridge
